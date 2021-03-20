@@ -38,9 +38,29 @@ enum layers {
     L_NUM,
     L_SNUM,
     L_OS,
-    L_GAME,
+    L_QGAME,
     L_EMPT,
 };
+
+#ifdef HOMEROWMODS
+#define HR_A MT(MOD_LGUI, KC_A)
+#define HR_R MT(MOD_LALT, KC_R)
+#define HR_S MT(MOD_LSFT, KC_S)
+#define HR_T MT(MOD_LCTL, KC_T)
+#define HR_N MT(MOD_RCTL, KC_N)
+#define HR_E MT(MOD_RSFT, KC_E)
+#define HR_I MT(MOD_LALT, KC_I)
+#define HR_O MT(MOD_RGUI, KC_O)
+#else
+#define HR_A KC_A
+#define HR_R KC_R
+#define HR_S KC_S
+#define HR_T KC_T
+#define HR_N KC_N
+#define HR_E KC_E
+#define HR_I KC_I
+#define HR_O KC_O
+#endif
 
 #define NAV_SPC LT(L_NAV, KC_SPACE)
 
@@ -112,9 +132,9 @@ enum layers {
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     [L_BASE] = LAYOUT_moonlander(
-        _______       , KC_1          , KC_2          , KC_3          , KC_4          , KC_5          , _______           , _______       , KC_6          , KC_7          , KC_8          , KC_9          , KC_0          , TG(L_GAME)    ,
+        _______       , KC_1          , KC_2          , KC_3          , KC_4          , KC_5          , _______           , _______       , KC_6          , KC_7          , KC_8          , KC_9          , KC_0          , TG(L_QGAME)   ,
         _______       , KC_Q          , KC_W          , KC_F          , KC_P          , KC_G          , _______           , _______       , KC_J          , KC_L          , KC_U          , KC_Y          , KC_MINUS      , _______       ,
-        MO(L_OS)      , KC_A          , KC_R          , KC_S          , KC_T          , KC_D          , KC_BSPACE         , KC_ENTER      , KC_H          , KC_N          , KC_E          , KC_I          , KC_O          , KC_QUOTE      ,
+        MO(L_OS)      , HR_A          , HR_R          , HR_S          , HR_T          , KC_D          , KC_BSPACE         , KC_ENTER      , KC_H          , HR_N          , HR_E          , HR_I          , HR_O          , KC_QUOTE      ,
         KC_LSHIFT     , KC_Z          , KC_X          , KC_C          , KC_V          , KC_B                              ,                 KC_K          , KC_M          , KC_COMMA      , KC_DOT        , KC_SLASH      , KC_RSHIFT     ,
         _______       , _______       , _______       , KC_LALT       , KC_LCTRL      ,                 _______           , _______                       , KC_RCTRL      , KC_RALT       , _______       , _______       , _______       ,
                                                                         MO(L_SYMS)    , _______       , MO(L_NUM)         , KC_LGUI       , KC_TAB        , NAV_SPC
@@ -137,7 +157,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     ),
     [L_NUM] = LAYOUT_moonlander(
         _______       , _______       , _______       , _______       , _______       , _______       , _______           , _______       , _______       , _______       , _______       , _______       , _______       , _______       ,
-        _______       , _______       , _______       , _______       , _______       , _______       , _______           , _______       , ST_MACRO_0    , KC_7          , KC_8          , KC_9          , _______       , _______       ,
+        _______       , _______       , _______       , _______       , KC_PSCREEN    , _______       , _______           , _______       , ST_MACRO_0    , KC_7          , KC_8          , KC_9          , _______       , _______       ,
         _______       , _______       , _______       , _______       , _______       , _______       , _______           , _______       , ST_MACRO_1    , KC_4          , KC_5          , KC_6          , _______       , _______       ,
         MO(L_SNUM)    , _______       , _______       , _______       , _______       , _______                           ,                 ST_MACRO_2    , KC_1          , KC_2          , KC_3          , _______       , MO(L_SNUM)    ,
         _______       , _______       , _______       , _______       , _______       ,                 _______           , _______                       , KC_0          , _______       , KC_DOT        , _______       , _______       ,
@@ -159,7 +179,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         _______       , _______       , _______       , _______       , _______       ,                 _______           , _______                       , _______       , _______       , _______       , _______       , _______       ,
                                                                         OS_CMD        , _______       , _______           , _______       , _______       , OS_LAUNCH
     ),
-    [L_GAME] = LAYOUT_moonlander(
+    [L_QGAME] = LAYOUT_moonlander(
         _______       , _______       , _______       , _______       , _______       , _______       , _______           , _______       , _______       , _______       , _______       , _______       , _______       , _______       ,
         _______       , KC_Q          , KC_W          , KC_E          , KC_R          , KC_T          , _______           , _______       , KC_Y          , KC_U          , KC_I          , KC_O          , KC_P          , _______       ,
         _______       , KC_A          , KC_S          , KC_D          , KC_F          , KC_G          , _______           , _______       , KC_H          , KC_J          , KC_K          , KC_L          , _______       , _______       ,
@@ -187,10 +207,10 @@ void keyboard_post_init_user(void) {
 }
 
 const uint8_t PROGMEM ledmap[][DRIVER_LED_TOTAL][3] = {
-    [L_GAME] = COLORS_moonlander(
+    [L_QGAME] = COLORS_moonlander(
         HSV_TEAL      , HSV_TEAL      , HSV_TEAL      , HSV_TEAL      , HSV_TEAL      , HSV_TEAL      , HSV_TEAL          , c_______c     , c_______c     , c_______c     , c_______c     , c_______c     , c_______c     , c_______c     ,
-        HSV_TEAL      , HSV_TEAL      , HSV_TEAL      , HSV_TEAL      , HSV_TEAL      , HSV_TEAL      , HSV_TEAL          , c_______c     , c_______c     , c_______c     , c_______c     , c_______c     , c_______c     , c_______c     ,
-        HSV_TEAL      , HSV_TEAL      , HSV_TEAL      , HSV_TEAL      , HSV_TEAL      , HSV_TEAL      , HSV_TEAL          , c_______c     , c_______c     , c_______c     , c_______c     , c_______c     , c_______c     , c_______c     ,
+        HSV_TEAL      , HSV_TEAL      , HSV_YELLOW    , HSV_TEAL      , HSV_TEAL      , HSV_TEAL      , HSV_TEAL          , c_______c     , c_______c     , c_______c     , c_______c     , c_______c     , c_______c     , c_______c     ,
+        HSV_TEAL      , HSV_YELLOW    , HSV_YELLOW    , HSV_YELLOW    , HSV_TEAL      , HSV_TEAL      , HSV_TEAL          , c_______c     , c_______c     , c_______c     , c_______c     , c_______c     , c_______c     , c_______c     ,
         HSV_TEAL      , HSV_TEAL      , HSV_TEAL      , HSV_TEAL      , HSV_TEAL      , HSV_TEAL                          ,                 c_______c     , c_______c     , c_______c     , c_______c     , c_______c     , c_______c     ,
         HSV_TEAL      , HSV_TEAL      , HSV_TEAL      , HSV_TEAL      , HSV_TEAL      ,                 c_______c         , c_______c                     , c_______c     , c_______c     , c_______c     , c_______c     , c_______c     ,
                                                                         c_______c     , c_______c     , c_______c         , c_______c     , c_______c     , c_______c
@@ -219,7 +239,7 @@ void rgb_matrix_indicators_user(void) {
 
     uint8_t layer = biton32(layer_state);
     switch (layer) {
-    case L_GAME:
+    case L_QGAME:
         set_layer_color(layer);
         break;
     default:
